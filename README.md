@@ -6,14 +6,22 @@ Paper Submit is a lean, single-event CFP management platform.
 
 1. Copy `.env.example` to `.env` and replace the placeholder secrets.
 2. Set the vars 
+
 PUBLIC_BASE_URL to http://localhost
+
 CADDY_DOMAIN to :80
+
 DATABASE password in DATABASE_URL and POSTGRES_PASSWORD
+
 COOKIE_SECURE to false
+
 TRUST_PROXY to false
+
 APP_ENCRYPTION_KEY=replace-with-32-byte-base64-key
+
 COOKIE_SECRET=replace-with-32-byte-base64-key
-3. `docker compose build && docker compose up db`.
+
+4. `docker compose build && docker compose up db`.
 
 
 ## Production
