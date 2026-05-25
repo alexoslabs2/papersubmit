@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="Conference audience and stage">
+  <rect width="1600" height="1000" fill="#16313a"/>
+  <rect x="0" y="560" width="1600" height="440" fill="#eef3f4"/>
+  <rect x="170" y="130" width="1260" height="420" rx="8" fill="#f7faf9"/>
+  <rect x="230" y="190" width="1140" height="300" rx="4" fill="#d9ede8"/>
+  <circle cx="400" cy="720" r="70" fill="#156c5b"/>
+  <circle cx="600" cy="700" r="62" fill="#7c3f1d"/>
+  <circle cx="790" cy="730" r="76" fill="#315f7d"/>
+  <circle cx="1010" cy="705" r="66" fill="#906c18"/>
+  <circle cx="1220" cy="725" r="72" fill="#7a2538"/>
+  <rect x="700" y="360" width="210" height="120" rx="6" fill="#156c5b"/>
+  <circle cx="805" cy="315" r="44" fill="#172026"/>
+  <path d="M275 265h410v28H275zM275 325h600v24H275zM275 382h520v24H275z" fill="#172026" opacity=".82"/>
+</svg>

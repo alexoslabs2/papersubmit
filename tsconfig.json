@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@web/*": ["src/web/*"],
+      "@shared/*": ["src/shared/*"]
+    },
+    "skipLibCheck": true
+  },
+  "include": ["src/web/**/*.ts", "src/web/**/*.vue", "src/shared/**/*.ts", "src/server/**/*.d.ts", "tests/**/*.ts"],
+  "references": []
+}
