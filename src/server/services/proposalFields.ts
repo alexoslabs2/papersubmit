@@ -5,6 +5,7 @@ export const technicalLevelOptions = ['intermediate', 'advanced', 'expert'] as c
 
 export type PresentationLanguage = (typeof presentationLanguageOptions)[number];
 export type TechnicalLevel = (typeof technicalLevelOptions)[number];
+const keyTakeawaysMaxLength = 500;
 
 export interface ProposalPayload {
   speakerFullName?: string;
@@ -50,7 +51,7 @@ const textLimits: Array<[keyof ProposalPayload, keyof SanitizedProposalPayload, 
   ['title', 'title', 'Talk title', 200],
   ['abstract', 'abstract', 'Abstract', 1000],
   ['description', 'description', 'Detailed description', 2000],
-  ['keyTakeaways', 'key_takeaways', 'Key takeaways', 100],
+  ['keyTakeaways', 'key_takeaways', 'Key takeaways', keyTakeawaysMaxLength],
   ['relatedTools', 'related_tools', 'Related tools or repositories', 100],
   ['additionalNotes', 'additional_notes', 'Additional notes', 100]
 ];

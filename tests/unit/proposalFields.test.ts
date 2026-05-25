@@ -45,6 +45,24 @@ describe('proposal field validation', () => {
     expect(result).toEqual({ ok: false, error: 'Abstract must be 1000 characters or fewer' });
   });
 
+  it('allows key takeaways up to 500 characters', () => {
+    const result = validateAndSanitizeProposalPayload({
+      ...validPayload,
+      keyTakeaways: 'a'.repeat(500)
+    });
+
+    expect(result).toMatchObject({ ok: true });
+  });
+
+  it('rejects key takeaways over 500 characters', () => {
+    const result = validateAndSanitizeProposalPayload({
+      ...validPayload,
+      keyTakeaways: 'a'.repeat(501)
+    });
+
+    expect(result).toEqual({ ok: false, error: 'Key takeaways must be 500 characters or fewer' });
+  });
+
   it('rejects invalid language and technical level options', () => {
     expect(validateAndSanitizeProposalPayload({
       ...validPayload,

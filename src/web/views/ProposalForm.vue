@@ -9,6 +9,7 @@ const saving = ref(false);
 const proposals = useProposalStore();
 const auth = useAuthStore();
 const router = useRouter();
+const keyTakeawaysMaxLength = 500;
 
 const form = reactive<ProposalFormPayload>({
   speakerFullName: auth.user?.name ?? '',
@@ -36,7 +37,7 @@ const fieldLimits = {
   onlinePresence: 100,
   abstract: 1000,
   description: 2000,
-  keyTakeaways: 100,
+  keyTakeaways: keyTakeawaysMaxLength,
   relatedTools: 100,
   additionalNotes: 100
 } as const;
