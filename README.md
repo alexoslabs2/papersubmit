@@ -21,7 +21,7 @@ APP_ENCRYPTION_KEY=replace-with-32-byte-base64-key
 
 COOKIE_SECRET=replace-with-32-byte-base64-key
 
-4. `docker compose build && docker compose up db`.
+4. `docker compose build && docker compose up -d`.
 
 
 ## Production
@@ -44,12 +44,13 @@ COOKIE_SECRET=replace-with-32-byte-base64-key
 Then start:
 
 ```bash
-docker compose up --build 
+docker compose build && docker compose up -d
 ```
+
 ## Operational Notes
 
 1. Check the setup url in container log 
-docker compose logs -f | egrep token
+docker compose logs | egrep token
 
 ```
 Setup URL: http://<CFP_URL>/setup?token=YD7_1boOUJR6e1ZgrrS73njNPf3aQnW6blvUQ9KCrGM
