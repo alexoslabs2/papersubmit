@@ -21,8 +21,9 @@ APP_ENCRYPTION_KEY=replace-with-32-byte-base64-key
 
 COOKIE_SECRET=replace-with-32-byte-base64-key
 
-4. `docker compose build && docker compose up -d`.
-
+```bash
+docker compose build && docker compose up -d`
+```
 
 ## Production
 
