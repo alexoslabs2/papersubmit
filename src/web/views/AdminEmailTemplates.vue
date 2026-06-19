@@ -8,7 +8,9 @@ onMounted(() => admin.loadTemplates());
 <template>
   <section>
     <h1>Email Templates</h1>
-    <div class="grid">
+    <div v-if="admin.loading" class="empty">Loading email templates...</div>
+    <div v-else-if="admin.error" class="empty error">{{ admin.error }}</div>
+    <div v-else class="grid">
       <article v-for="template in admin.templates" :key="String(template.id)" class="item">
         <h2>{{ template.name }}</h2>
         <p>{{ template.subject }}</p>

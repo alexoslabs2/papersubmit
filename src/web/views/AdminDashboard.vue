@@ -9,8 +9,10 @@ const proposalCounts = computed(() => (admin.dashboard?.proposalCounts ?? []) as
 <template>
   <section>
     <h1>Dashboard</h1>
-    <div class="metric-grid">
-      <article class="metric" v-for="item in proposalCounts" :key="String(item.status)">
+    <div v-if="admin.loading" class="empty">Loading dashboard...</div>
+    <div v-else-if="admin.error" class="empty error">{{ admin.error }}</div>
+    <div v-else class="metric-grid">
+      <article v-for="item in proposalCounts" :key="String(item.status)" class="metric">
         <span>{{ item.status }}</span>
         <strong>{{ item.count }}</strong>
       </article>

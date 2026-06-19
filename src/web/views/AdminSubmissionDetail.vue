@@ -6,6 +6,7 @@ import { useAdminStore } from '../stores/adminStore';
 import { useAuthStore } from '../stores/authStore';
 import { api } from '../api';
 import StatusBadge from '../components/StatusBadge.vue';
+import { errorMessage } from '../errors';
 
 const route = useRoute();
 const router = useRouter();
@@ -16,6 +17,7 @@ const score = ref(5);
 const comments = ref('');
 const savingReview = ref(false);
 const reviewError = ref('');
+const decisionError = ref('');
 const reviews = computed(() => proposals.selected?.reviews ?? []);
 const averageScore = computed(() => proposals.selected?.averageScore ?? null);
 const ownReview = computed(() => reviews.value.find((review) => review.reviewerId === auth.user?.id));
@@ -53,8 +55,13 @@ watch(ownReview, (review) => {
 }, { immediate: true });
 async function decide(decision: 'accepted' | 'rejected') {
   if (!window.confirm(`Mark proposal as ${decision}?`)) return;
-  await admin.decide(String(route.params.id), decision);
-  await router.push('/app/submissions');
+  decisionError.value = '';
+  try {
+    await admin.decide(String(route.params.id), decision);
+    await router.push('/app/submissions');
+  } catch (error) {
+    decisionError.value = errorMessage(error, 'Decision could not be saved');
+  }
 }
 async function saveReview() {
   savingReview.value = true;
@@ -116,9 +123,16 @@ async function saveReview() {
         <button class="button primary" :disabled="!canReview || savingReview">{{ savingReview ? 'Saving...' : 'Save Review' }}</button>
       </form>
     </section>
+    <p v-if="decisionError" class="error">{{ decisionError }}</p>
     <div class="actions">
       <button class="button accept" :disabled="proposals.selected.status !== 'under_review'" @click="decide('accepted')">Accept</button>
       <button class="button reject" :disabled="proposals.selected.status !== 'under_review'" @click="decide('rejected')">Reject</button>
     </div>
+  </section>
+  <section v-else class="stack">
+    <h1>Submission</h1>
+    <div v-if="proposals.loading" class="empty">Loading submission...</div>
+    <div v-else-if="proposals.error" class="empty error">{{ proposals.error }}</div>
+    <div v-else class="empty">Submission not found.</div>
   </section>
 </template>

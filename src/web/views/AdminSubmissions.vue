@@ -11,7 +11,9 @@ onMounted(() => admin.loadSubmissions());
 <template>
   <section>
     <h1>Submissions</h1>
-    <div v-if="admin.submissions.length === 0" class="empty">No submissions yet.</div>
+    <div v-if="admin.loading" class="empty">Loading submissions...</div>
+    <div v-else-if="admin.error" class="empty error">{{ admin.error }}</div>
+    <div v-else-if="admin.submissions.length === 0" class="empty">No submissions yet.</div>
     <table v-else>
       <thead><tr><th>Title</th><th>Speaker</th><th>Status</th><th></th></tr></thead>
       <tbody>

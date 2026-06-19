@@ -8,7 +8,9 @@ onMounted(() => admin.loadAuditLogs());
 <template>
   <section>
     <h1>Audit Logs</h1>
-    <table>
+    <div v-if="admin.loading" class="empty">Loading audit logs...</div>
+    <div v-else-if="admin.error" class="empty error">{{ admin.error }}</div>
+    <table v-else>
       <thead><tr><th>ID</th><th>Action</th><th>Entity</th><th>Created</th></tr></thead>
       <tbody>
         <tr v-for="log in admin.auditLogs" :key="String(log.id)">

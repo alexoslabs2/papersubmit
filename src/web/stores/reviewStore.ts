@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { api } from '../api';
+import { errorMessage } from '../errors';
 
 export interface ReviewQueueItem {
   id: string;
@@ -39,17 +40,23 @@ export const useReviewStore = defineStore('reviewStore', {
         this.queue = data.reviews;
       } catch (err) {
         this.queue = [];
-        this.error = err instanceof Error ? err.message : 'Review queue could not be loaded';
+        this.error = errorMessage(err, 'Review queue could not be loaded');
       } finally {
         this.loading = false;
       }
     },
     async saveReview(proposalId: string, score: number, comments: string) {
-      await api('/reviews', {
-        method: 'POST',
-        body: JSON.stringify({ proposalId, score, comments })
-      });
-      await this.loadQueue();
+      this.error = '';
+      try {
+        await api('/reviews', {
+          method: 'POST',
+          body: JSON.stringify({ proposalId, score, comments })
+        });
+        await this.loadQueue();
+      } catch (error) {
+        this.error = errorMessage(error, 'Review could not be saved');
+        throw error;
+      }
     }
   }
 });

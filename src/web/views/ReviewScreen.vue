@@ -3,6 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useReviewStore } from '../stores/reviewStore';
 import { useEventStore } from '../stores/eventStore';
+import { errorMessage } from '../errors';
 
 const route = useRoute();
 const router = useRouter();
@@ -10,6 +11,8 @@ const reviews = useReviewStore();
 const eventStore = useEventStore();
 const score = ref(3);
 const comments = ref('');
+const saveError = ref('');
+const saving = ref(false);
 const item = computed(() => reviews.queue.find((proposal) => proposal.id === route.params.id));
 const missing = computed(() => !reviews.loading && !item.value);
 const languageLabels: Record<string, string> = { portuguese: 'Portuguese', english: 'English', other: 'Other' };
@@ -49,8 +52,16 @@ watch(item, (proposal) => {
 }, { immediate: true });
 
 async function save() {
-  await reviews.saveReview(String(route.params.id), score.value, comments.value);
-  await router.push('/app/reviews');
+  saveError.value = '';
+  saving.value = true;
+  try {
+    await reviews.saveReview(String(route.params.id), score.value, comments.value);
+    await router.push('/app/reviews');
+  } catch (error) {
+    saveError.value = errorMessage(error, 'Review could not be saved');
+  } finally {
+    saving.value = false;
+  }
 }
 </script>
 
@@ -67,9 +78,10 @@ async function save() {
       </template>
     </dl>
     <form v-if="item && eventStore.event?.status === 'reviewing'" class="panel" @submit.prevent="save">
-      <label>Score <input v-model.number="score" min="1" max="5" type="number" /></label>
-      <label>Comments <textarea v-model="comments" rows="8" required /></label>
-      <button class="button primary">Submit Review</button>
+      <label>Score <input v-model.number="score" min="1" max="5" type="number" :disabled="saving" /></label>
+      <label>Comments <textarea v-model="comments" rows="8" :disabled="saving" required /></label>
+      <p v-if="saveError" class="error">{{ saveError }}</p>
+      <button class="button primary" :disabled="saving">{{ saving ? 'Saving...' : 'Submit Review' }}</button>
     </form>
     <div v-else-if="item" class="empty">Reviews are not open yet.</div>
   </section>

@@ -2,6 +2,7 @@
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useEventStore } from '../stores/eventStore';
 import type { PublicEvent, ScoringScale, TalkFormat } from '@shared/types';
+import { errorMessage } from '../errors';
 
 const eventStore = useEventStore();
 const maxLogoBytes = 2 * 1024 * 1024;
@@ -90,7 +91,7 @@ async function save() {
     });
     saved.value = true;
   } catch (err) {
-    error.value = err instanceof Error ? err.message : 'Event update failed';
+    error.value = errorMessage(err, 'Event update failed');
   }
 }
 
@@ -116,7 +117,7 @@ async function uploadLogo(event: Event) {
     await eventStore.uploadLogo(file);
     logoSaved.value = true;
   } catch (err) {
-    logoError.value = err instanceof Error ? err.message : 'Logo upload failed';
+    logoError.value = errorMessage(err, 'Logo upload failed');
   } finally {
     logoUploading.value = false;
     input.value = '';
@@ -154,7 +155,9 @@ watch(() => eventStore.event, (event) => {
       </div>
     </header>
 
-    <form class="panel wide stack" @submit.prevent="save">
+    <div v-if="eventStore.loading" class="empty">Loading event settings...</div>
+    <div v-else-if="eventStore.error" class="empty error">{{ eventStore.error }}</div>
+    <form v-else class="panel wide stack" @submit.prevent="save">
       <p v-if="lockMessage" class="notice">{{ lockMessage }}</p>
       <section class="logo-upload">
         <img v-if="eventStore.event?.logoUrl" class="logo-preview" :src="eventStore.event.logoUrl" alt="" />

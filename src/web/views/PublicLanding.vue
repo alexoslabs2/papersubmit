@@ -5,7 +5,7 @@ import { formatCfpDescription } from '../landingText';
 import { useEventStore } from '../stores/eventStore';
 
 const eventStore = useEventStore();
-onMounted(() => eventStore.loadEvent().catch(() => undefined));
+onMounted(() => eventStore.loadEvent());
 
 const formatter = computed(() => {
   const timezone = eventStore.event?.timezone ?? 'UTC';
@@ -43,6 +43,7 @@ function formatTalk(format: string) {
       </section>
       <section class="hero-copy">
         <h1>{{ eventStore.event?.name ?? 'Paper Submit' }}</h1>
+        <p v-if="eventStore.error" class="error">{{ eventStore.error }}</p>
         <div class="actions">
           <RouterLink v-if="cfpState.open" class="button primary" to="/register?next=/app/proposals/new">Submit a Proposal</RouterLink>
           <button v-else class="button primary" disabled>Submit a Proposal</button>
