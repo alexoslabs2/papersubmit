@@ -21,6 +21,8 @@ APP_ENCRYPTION_KEY=replace-with-32-byte-base64-key
 
 COOKIE_SECRET=replace-with-32-byte-base64-key
 
+Tip: Use the command openssl rand -base64 32 to generate the APP_ENCRYPTION_KEY and COOKIE_SECRET
+
 ```bash
 docker compose build && docker compose up -d`
 ```
@@ -41,6 +43,7 @@ DATABASE password in DATABASE_URL and POSTGRES_PASSWORD
 APP_ENCRYPTION_KEY=replace-with-32-byte-base64-key
 COOKIE_SECRET=replace-with-32-byte-base64-key
 ```
+Tip: Use the command openssl rand -base64 32 to generate the APP_ENCRYPTION_KEY and COOKIE_SECRET
 
 Then start:
 
@@ -62,6 +65,6 @@ Setup URL: http://<CFP_URL>/setup?token=YD7_1boOUJR6e1ZgrrS73njNPf3aQnW6blvUQ9KC
 
 2. Fill the CFP Infos
 3. Access the Admin Page
-4. Configure the SMTP 
+4. Configure the SMTP (Tip: https://smtp2go.com)
 5. Upload the Event logo and Change CFP Status
 6. Invite the Reviews
