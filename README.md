@@ -21,7 +21,7 @@ APP_ENCRYPTION_KEY=replace-with-32-byte-base64-key
 
 COOKIE_SECRET=replace-with-32-byte-base64-key
 
-Tip: Use the command ```openssl rand -base64 32``` to generate the APP_ENCRYPTION_KEY and COOKIE_SECRET
+Tip: Use the command ```openssl rand -base64 32``` to generate the APP_ENCRYPTION_KEY and COOKIE_SECRET keys
 
 ```bash
 docker compose build && docker compose up -d`
@@ -43,7 +43,7 @@ DATABASE password in DATABASE_URL and POSTGRES_PASSWORD
 APP_ENCRYPTION_KEY=replace-with-32-byte-base64-key
 COOKIE_SECRET=replace-with-32-byte-base64-key
 ```
-Tip: Use the command ```openssl rand -base64 32``` to generate the APP_ENCRYPTION_KEY and COOKIE_SECRET
+Tip: Use the command ```openssl rand -base64 32``` to generate the APP_ENCRYPTION_KEY and COOKIE_SECRET keys
 
 Then start:
 
