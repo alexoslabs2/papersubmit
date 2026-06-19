@@ -45,7 +45,7 @@ COOKIE_SECRET=replace-with-32-byte-base64-key
 Then start:
 
 ```bash
-docker compose build && docker compose up -d
+docker compose up -d
 ```
 
 ## Operational Notes
