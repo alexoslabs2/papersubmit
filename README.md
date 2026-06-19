@@ -51,7 +51,10 @@ docker compose up -d
 ## Operational Notes
 
 1. Check the setup url in container log 
+
+```bash
 docker compose logs | egrep token
+```
 
 ```
 Setup URL: http://<CFP_URL>/setup?token=YD7_1boOUJR6e1ZgrrS73njNPf3aQnW6blvUQ9KCrGM
